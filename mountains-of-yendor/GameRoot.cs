@@ -2,17 +2,25 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using mountains_of_yendor.TileEngine;
+
 namespace mountains_of_yendor
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class GameRoot : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
-        public Game1()
+
+        Engine engine = new Engine(24, 24);
+        Tileset tileset;
+        TileMap map;
+
+
+
+        public GameRoot()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -40,7 +48,27 @@ namespace mountains_of_yendor
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Texture2D tilesetTexture = Content.Load<Texture2D>("level");
+            tileset = new Tileset(tilesetTexture, 27, 27, 24, 24);
+
+            MapLayer layer = new MapLayer(5, 5);
+
+            int[,] level = { { 1, 4, 2, 4, 5 },{5,3,56,8,3},{2,7,35,2,24 },{ 72,72,72,72,73},{8,88,2,16,6 } };
+
+
+            for (int y = 0; y < layer.Height; y++)
+            {
+                for(int x = 0; x < layer.Width; x++)
+                {
+                    Tile tile = new Tile(level[x,y], 0);
+                    layer.SetTile(x, y, tile);
+                }
+            }
+
+            map = new TileMap(tileset, layer);
+
+            base.LoadContent();
+
         }
 
         /// <summary>
@@ -73,11 +101,15 @@ namespace mountains_of_yendor
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Matrix.Identity);
+
+            map.Draw(spriteBatch);
 
             base.Draw(gameTime);
+
+            spriteBatch.End();
         }
     }
 }
