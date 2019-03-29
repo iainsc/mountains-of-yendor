@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using mountains_of_yendor.XLib;
+using mountains_of_yendor.YendorLibrary;
 using mountains_of_yendor.TileEngine;
 
 namespace mountains_of_yendor
@@ -24,6 +26,8 @@ namespace mountains_of_yendor
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            Components.Add(new InputHandler(this));
         }
 
         /// <summary>
