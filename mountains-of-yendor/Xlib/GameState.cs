@@ -51,9 +51,18 @@ namespace mountains_of_yendor.XLib
 
         public override void Draw(GameTime gameTime)
         {
+            DrawableGameComponent drawComponent;
+
             foreach (GameComponent component in childComponents)
             {
-                if (component.Visible) component.Draw(gameTime);
+                if(component is DrawableGameComponent)
+                {
+                    drawComponent = component as DrawableGameComponent;
+
+                    if (drawComponent.Visible)
+                        drawComponent.Draw(gameTime);
+                }
+                
             }
 
             base.Draw(gameTime);

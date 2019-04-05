@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using mountains_of_yendor.XLib;
-using mountains_of_yendor.YendorLibrary;
+//using mountains_of_yendor.Lib;
 using mountains_of_yendor.TileEngine;
+using mountains_of_yendor.GameScreens;
 
 namespace mountains_of_yendor
 {
@@ -14,7 +15,17 @@ namespace mountains_of_yendor
     public class GameRoot : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public SpriteBatch SpriteBatch;
+
+
+        const int screenWidth = 1024;
+        const int screenHeight = 768;
+
+        public readonly Rectangle ScreenRectangle;
+
+        GameStateManager stateManager;
+
+        public TitleScreen TitleScreen;
 
         Engine engine = new Engine(24, 24);
         Tileset tileset;
@@ -25,9 +36,25 @@ namespace mountains_of_yendor
         public GameRoot()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = screenHeight;
+
+
+            ScreenRectangle = new Rectangle(
+                0,
+                0,
+                screenWidth,
+                screenHeight);
+
             Content.RootDirectory = "Content";
 
             Components.Add(new InputHandler(this));
+
+            stateManager = new GameStateManager(this);
+            Components.Add(stateManager);
+
+            TitleScreen = new TitleScreen(this, stateManager);
+            stateManager.ChangeState(TitleScreen);
         }
 
         /// <summary>
@@ -50,7 +77,7 @@ namespace mountains_of_yendor
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             Texture2D tilesetTexture = Content.Load<Texture2D>("level");
             tileset = new Tileset(tilesetTexture, 27, 27, 24, 24);
@@ -107,13 +134,13 @@ namespace mountains_of_yendor
         {
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Matrix.Identity);
+            SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Matrix.Identity);
 
-            map.Draw(spriteBatch);
+            map.Draw(SpriteBatch);
 
             base.Draw(gameTime);
 
-            spriteBatch.End();
+            SpriteBatch.End();
         }
     }
 }

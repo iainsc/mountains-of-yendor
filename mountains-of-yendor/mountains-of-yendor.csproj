@@ -43,7 +43,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameRoot.cs" />
+    <Compile Include="GameScreens\BaseGameState.cs" />
+    <Compile Include="GameScreens\TitleScreen.cs" />
     <Compile Include="XLib\GameState.cs" />
+    <Compile Include="XLib\GameStateManager.cs" />
     <Compile Include="XLib\InputHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
