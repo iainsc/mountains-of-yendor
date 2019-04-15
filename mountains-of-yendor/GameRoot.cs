@@ -26,6 +26,7 @@ namespace mountains_of_yendor
         GameStateManager stateManager;
 
         public TitleScreen TitleScreen;
+        public StartMenuScreen StartMenuScreen;
 
         Engine engine = new Engine(24, 24);
         Tileset tileset;
@@ -36,6 +37,7 @@ namespace mountains_of_yendor
         public GameRoot()
         {
             graphics = new GraphicsDeviceManager(this);
+
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.PreferredBackBufferHeight = screenHeight;
 
@@ -54,6 +56,8 @@ namespace mountains_of_yendor
             Components.Add(stateManager);
 
             TitleScreen = new TitleScreen(this, stateManager);
+            StartMenuScreen = new StartMenuScreen(this, stateManager);
+
             stateManager.ChangeState(TitleScreen);
         }
 

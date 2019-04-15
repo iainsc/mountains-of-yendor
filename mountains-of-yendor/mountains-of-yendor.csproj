@@ -44,7 +44,12 @@
   <ItemGroup>
     <Compile Include="GameRoot.cs" />
     <Compile Include="GameScreens\BaseGameState.cs" />
+    <Compile Include="GameScreens\StartMenuScreen.cs" />
     <Compile Include="GameScreens\TitleScreen.cs" />
+    <Compile Include="XLib\Controls\Control.cs" />
+    <Compile Include="XLib\Controls\ControlManager.cs" />
+    <Compile Include="XLib\Controls\Label.cs" />
+    <Compile Include="XLib\Controls\LinkLabel.cs" />
     <Compile Include="XLib\GameState.cs" />
     <Compile Include="XLib\GameStateManager.cs" />
     <Compile Include="XLib\InputHandler.cs" />
